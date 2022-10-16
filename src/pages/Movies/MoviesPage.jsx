@@ -8,14 +8,15 @@ import { getSearchMovie } from 'services/api';
 
 export const MoviesPage = () => {
     const [movies, setMovies] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
-    // const [searchParams, setSearchParams] = useSearchParams();
-    // const query = searchParams.get('query');
+    // const [searchQuery, setSearchQuery] = useState('');
+    const [searchParams, setSearchParams] = useSearchParams();
+    const query = searchParams.get('query') ?? '';
+
 
     useEffect(() => {
         const fetchQueryMovie = async () => {
             try {
-                const data = await getSearchMovie(searchQuery);
+                const data = await getSearchMovie(query);
                 console.log(data);
                 setMovies(data.results)
             
@@ -23,23 +24,22 @@ export const MoviesPage = () => {
                 console.log(error);
             }
         }
-        if (searchQuery) {
+        if (query) {
             fetchQueryMovie()
         };
-    },[searchQuery])
+    },[query])
     
     const onFormSubmit = (searchQuery) => {
         // if (searchQuery === this.state.searchQuery) {
         //   toast.error('Oops... Something went wrong, repeat your query!')
         // }
-        setSearchQuery(searchQuery);
-        // setPage(1);
+        setSearchParams({query: searchQuery });
         setMovies([]);
       }
 
     return (
         <div>
-            <MoviesSearchForm onSubmit={onFormSubmit} />
+            <MoviesSearchForm  onSubmit={onFormSubmit} />
             {movies && <SearchMoviesList movies={movies} />}
         </div>
     )

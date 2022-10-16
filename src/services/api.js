@@ -26,22 +26,14 @@ export const getMovieDetails = async (id) => {
 
 export const getMovieCast = async (id) => {
   const response = await axios.get(
-    `${BASE_URL}movie/${id}?credits?api_key=${API_KEY}`
+    `${BASE_URL}movie/${id}/credits?api_key=${API_KEY}`
   );
   return response.data;
 }
 
 export const getMovieReviews = async (id) => {
   const response = await axios.get(
-    `${BASE_URL}movie/${id}?reviews?api_key=${API_KEY}`
+    `${BASE_URL}movie/${id}/reviews?api_key=${API_KEY}`
   );
   return response.data;
 }
-
-
-// export const getTrending = async (page) => {
-//   const response = await axios.get(
-//     `${BASE_URL}trending/movie/day?api_key=${API_KEY}&page=${page}`
-//   );
-//   return response.data;
-// };
