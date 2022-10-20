@@ -1,13 +1,16 @@
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 
-export const ReviewsItem = ({ reviews }) => {
+// export const ReviewsItem = ({ reviews.results }) => {
 
-    return reviews.map(({ author, content}) => {
-        return (
-            <li key={nanoid()}>
-                <p>Author: {author}</p>
-                <p>Character: {content}</p>
-            </li>
-        );
-    })
-}
+//     // return reviews.map(({ id, author, content }) => {
+//     return (
+//         {
+//             reviews.results.map(({ id, author, content }) => {
+//                 <li key={id}>
+//                     <p>Author: {author}</p>
+//                     <p>Character: {content}</p>
+//                 </li>
+//             }
+//             )
+//         }
+// }

@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getMovieCast } from 'services/api';
 import { CastItem } from './CastItem';
+import { Loader } from 'components/Loader/Loader';
 
 
-export const Cast = () => {
+
+const Cast = () => {
     const [cast, setCast] = useState(null);
+    const [status, setStatus] = useState('idle');
 
     const { id } = useParams();
-    const navigate = useNavigate();
-
-
 
     useEffect(() => {
         const fetchCast = async () => {
@@ -19,10 +19,14 @@ export const Cast = () => {
         return;
       }
       try {
+        setStatus('pending')
         const data = await getMovieCast(id);
+        setStatus('resolve');
         setCast(data);
       } catch (error) {
-          console.log(error);
+        console.log(error);
+        setStatus('rejected');
+
       } finally {
       }
     };
@@ -32,12 +36,17 @@ export const Cast = () => {
     console.log(cast);
     
 
-    return (
+  return (
+    <>
+        {status === 'pending' && <Loader />}
         <ul>
             {cast && <CastItem cast={cast.cast}/>}
-        </ul>
+      </ul>
+    </>
     )
     
-  };
+};
+
+export default Cast;
 
     

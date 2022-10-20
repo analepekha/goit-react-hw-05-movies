@@ -1,10 +1,13 @@
-import { HomePage } from "pages/HomePage/HomePage";
-import { MoviesPage } from "pages/Movies/MoviesPage";
-import { MovieDetailsPage } from "pages/MovieDetailsPage/MovieDetailsPage";
+import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import { Layout } from "./Layout/Layout";
-import { Cast } from './Cast/Cast';
-import { Reviews } from './Reviews/Reviews';
+
+const Layout = lazy(() => import("./Layout/Layout"));
+const HomePage = lazy(() => import("pages/HomePage/HomePage"));
+const MovieDetailsPage = lazy(() => import("pages/MovieDetailsPage/MovieDetailsPage"));
+const MoviesPage = lazy(() => import("pages/Movies/MoviesPage"));
+const NotFoundPage = lazy(() => import("pages/NotFoundPage/NotFoundPage"));
+const Cast = lazy(() => import("./Cast/Cast"));
+const Reviews = lazy(() => import("./Reviews/Reviews"));
 
 
 export const App = () => {
@@ -19,9 +22,8 @@ export const App = () => {
             <Route path="reviews" element={<Reviews/> } /> */
           </Route> 
         </Route>
-        <Route path="*" element={<HomePage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
-
     </div>
   );
 };
