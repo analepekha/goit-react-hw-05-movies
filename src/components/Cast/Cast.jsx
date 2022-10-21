@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getMovieCast } from 'services/api';
 import { CastItem } from './CastItem';
 import { Loader } from 'components/Loader/Loader';
+import { CastList } from './Cast.styled';
 
 
 
@@ -39,9 +40,9 @@ const Cast = () => {
   return (
     <>
         {status === 'pending' && <Loader />}
-        <ul>
+        <CastList>
             {cast && <CastItem cast={cast.cast}/>}
-      </ul>
+      </CastList>
     </>
     )
     

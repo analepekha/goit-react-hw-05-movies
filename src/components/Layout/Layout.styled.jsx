@@ -38,5 +38,5 @@ export const Link = styled(NavLink)`
     color: white;
     background-color: #1a526c;
   }
-}
+
 `;

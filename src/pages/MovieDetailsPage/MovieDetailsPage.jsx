@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { NavLink, Outlet, useParams, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, useParams, useNavigate, useLocation } from "react-router-dom";
 import { getMovieDetails } from 'services/api';
 import { Loader } from 'components/Loader/Loader';
-
+import { BtnGoBack, Icon, MainInfo, Img, WrapperAbout, Main, Link} from './MovieDetailsPage.styled';
 
 const IMG_URL = 'https://image.tmdb.org/t/p/w500/';
 
@@ -61,29 +61,33 @@ const MovieDetailsPage = () => {
             {status === Status.REJECTED && <p>Oops, something went wrong... Reload the page</p>}
 
             {movie && (
-                <div>
-                    <button onClick={goBack}>Go back</button>
-                    <div>
-                    <img src={`${IMG_URL}${movie.poster_path}`} alt={movie.title} />
+                <Main>
+            <BtnGoBack onClick={goBack}>
+              <Icon/>
+              Go back</BtnGoBack>
+                    <MainInfo>
+              <Img src={`${IMG_URL}${movie.poster_path}`} alt={movie.title} />
+              <WrapperAbout>
                     <h1>{movie.title} ({movie.release_date.slice(0,4)})</h1>
                     <p>User score: {movie.vote_average.toFixed(1)}</p>
                     <h2>Overview</h2>
                     <p>{movie.overview}</p>
                     <h2>Genres</h2>
-                    <p>{movie.genres.map(({name})=>name).join(', ')}</p>
-                    </div>
+                <p>{movie.genres.map(({ name }) => name).join(', ')}</p>
+                </WrapperAbout>
+                    </MainInfo>
                     <p>Additional information</p>
                     <ul>
                         <li>
-                            <NavLink state={{ from }} to={catsLink}>Cast</NavLink>
+                            <Link state={{ from }} to={catsLink}>Cast</Link>
                         </li>
                         <li>
-                            <NavLink  state={{ from }} to={reviewsLink}>Reviews</NavLink>
+                            <Link  state={{ from }} to={reviewsLink}>Reviews</Link>
                         </li>
                     </ul>
                           <Outlet />
 
-                </div>
+                </Main>
         )}
         </>
     )

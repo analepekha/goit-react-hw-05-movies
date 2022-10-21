@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { CardWrapper, CastImg, Text} from './Cast.styled';
 
 export const CastItem = ({ cast }) => {
 
@@ -7,15 +8,15 @@ export const CastItem = ({ cast }) => {
 
     return cast.map(({id, profile_path, original_name, character }) => {
         return (
-            <li key={id}>
+            <CardWrapper key={id}>
                 {profile_path ? (
-                    <img src={`${IMG_URL}${profile_path}`} alt={original_name} />
+                    <CastImg src={`${IMG_URL}${profile_path}`} alt={original_name} />
                 ) : (
-                    <img src="" alt={original_name} />
+                        <img src='https://www.svgrepo.com/show/91111/avatar-profile.svg' alt={original_name} width={250} />
                 )}
-                <p>{original_name}</p>
-                <p>Character: {character}</p>
-            </li>
+                <Text>{original_name}</Text>
+                <Text>Character: {character}</Text>
+            </CardWrapper>
         );
     })
 }

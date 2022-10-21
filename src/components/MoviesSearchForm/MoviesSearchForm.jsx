@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from "react";
-import { Form, Input, BtnSearch, Icon} from './MoviesSearchForm.styled';
+import { Form, Input, BtnSearch, Icon, LabelSearch} from './MoviesSearchForm.styled';
 
 export const MoviesSearchForm = ({ onSubmit }) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -31,7 +31,9 @@ export const MoviesSearchForm = ({ onSubmit }) => {
                     value={searchQuery}
                 />
             <BtnSearch type="submit">
-                <Icon/></BtnSearch>
+                <Icon />
+                {/* <LabelSearch></LabelSearch> */}
+            </BtnSearch>
         </Form>
     )
 }
