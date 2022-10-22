@@ -7,18 +7,20 @@ import { Loader } from 'components/Loader/Loader';
 import { CastList } from './Cast.styled';
 
 
-
 const Cast = () => {
     const [cast, setCast] = useState(null);
     const [status, setStatus] = useState('idle');
+    const [loading, setLoading] = useState(false);
+
 
     const { id } = useParams();
 
-    useEffect(() => {
-        const fetchCast = async () => {
-            if (!id) {
-        return;
-      }
+  useEffect(() => {
+      const fetchCast = async () => {
+        setLoading(true);
+        if (!id) {
+          return;
+        }
       try {
         setStatus('pending')
         const data = await getMovieCast(id);
@@ -27,24 +29,22 @@ const Cast = () => {
       } catch (error) {
         console.log(error);
         setStatus('rejected');
-
       } finally {
+        setLoading(false);
       }
     };
     fetchCast();
     }, [id])
-
-    console.log(cast);
     
 
-  return (
-    <>
-        {status === 'pending' && <Loader />}
-        <CastList>
-            {cast && <CastItem cast={cast.cast}/>}
-      </CastList>
-    </>
-    )
+      return (
+          <>
+            {status === 'pending' && loading && <Loader />}
+            <CastList>
+                {cast && <CastItem cast={cast.cast}/>}
+            </CastList>
+          </>
+        )
     
 };
 

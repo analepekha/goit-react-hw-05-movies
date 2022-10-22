@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Outlet, useParams, useNavigate, useLocation } from "react-router-dom";
 import { getMovieDetails } from 'services/api';
 import { Loader } from 'components/Loader/Loader';
-import { BtnGoBack, Icon, MainInfo, Img, WrapperAbout, Main, Link} from './MovieDetailsPage.styled';
+import { BtnGoBack, Icon, MainInfo, Img, WrapperAbout, Main, Link, AddInfo, AddList, AddItem} from './MovieDetailsPage.styled';
 
 const IMG_URL = 'https://image.tmdb.org/t/p/w500/';
 
@@ -22,8 +22,6 @@ const MovieDetailsPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from || "/movies";
-    // console.log(location);
-    console.log(movie);
 
      useEffect(() => {
         const fetchMoviesDetails = async () => {
@@ -31,12 +29,9 @@ const MovieDetailsPage = () => {
 
       try {
         setStatus(Status.PENDING)
-          const data = await getMovieDetails(id);
-          console.log(data);
-
+        const data = await getMovieDetails(id);
         setStatus(Status.RESOLVED);
-          setMovies(data);
-          console.log(data);
+        setMovies(data);
       } catch (error) {
         console.log(error);
         setStatus(Status.REJECTED);
@@ -62,31 +57,32 @@ const MovieDetailsPage = () => {
 
             {movie && (
                 <Main>
-            <BtnGoBack onClick={goBack}>
-              <Icon/>
-              Go back</BtnGoBack>
-                    <MainInfo>
-              <Img src={`${IMG_URL}${movie.poster_path}`} alt={movie.title} />
-              <WrapperAbout>
-                    <h1>{movie.title} ({movie.release_date.slice(0,4)})</h1>
-                    <p>User score: {movie.vote_average.toFixed(1)}</p>
-                    <h2>Overview</h2>
-                    <p>{movie.overview}</p>
-                    <h2>Genres</h2>
-                <p>{movie.genres.map(({ name }) => name).join(', ')}</p>
-                </WrapperAbout>
-                    </MainInfo>
-                    <p>Additional information</p>
-                    <ul>
-                        <li>
+                  <BtnGoBack onClick={goBack}>
+                    <Icon/>
+                  Go back</BtnGoBack>
+                  <MainInfo>
+                    <Img src={`${IMG_URL}${movie.poster_path}`} alt={movie.title} />
+                    <WrapperAbout>
+                      <h1>{movie.title} ({movie.release_date.slice(0,4)})</h1>
+                      <p>User score: {movie.vote_average.toFixed(1)}</p>
+                      <h2>Overview</h2>
+                      <p>{movie.overview}</p>
+                      <h2>Genres</h2>
+                      <p>{movie.genres.map(({ name }) => name).join(', ')}</p>
+                    </WrapperAbout>
+                  </MainInfo>
+                  <AddInfo>
+                    <h3>Additional information</h3>
+                    <AddList>
+                        <AddItem>
                             <Link state={{ from }} to={catsLink}>Cast</Link>
-                        </li>
-                        <li>
+                        </AddItem>
+                        <AddItem>
                             <Link  state={{ from }} to={reviewsLink}>Reviews</Link>
-                        </li>
-                    </ul>
-                          <Outlet />
-
+                        </AddItem>
+                    </AddList>
+                  </AddInfo>
+                  <Outlet />
                 </Main>
         )}
         </>

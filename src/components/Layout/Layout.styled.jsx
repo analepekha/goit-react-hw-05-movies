@@ -16,14 +16,13 @@ export const Header = styled.header`
   margin-bottom: 16px;
   border-bottom: 1px solid black;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
-
-
 `;
 
 export const Nav = styled.nav`
-display: flex;
-padding: 10px 30px;
-`
+  display: flex;
+  align-items: center;
+  padding: 10px 30px;
+`;
 
 
 export const Link = styled(NavLink)`
@@ -38,5 +37,4 @@ export const Link = styled(NavLink)`
     color: white;
     background-color: #1a526c;
   }
-
 `;

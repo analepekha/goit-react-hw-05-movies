@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { CardWrapper, CastImg, Text} from './Cast.styled';
+import { CardWrapper, CastImg, Text, AdditionalText} from './Cast.styled';
 
 export const CastItem = ({ cast }) => {
 
@@ -12,10 +12,10 @@ export const CastItem = ({ cast }) => {
                 {profile_path ? (
                     <CastImg src={`${IMG_URL}${profile_path}`} alt={original_name} />
                 ) : (
-                        <img src='https://www.svgrepo.com/show/91111/avatar-profile.svg' alt={original_name} width={250} />
+                    <img src='https://www.svgrepo.com/show/91111/avatar-profile.svg' alt={original_name} width={250} height={375} />
                 )}
                 <Text>{original_name}</Text>
-                <Text>Character: {character}</Text>
+                <AdditionalText>Character: {character}</AdditionalText>
             </CardWrapper>
         );
     })

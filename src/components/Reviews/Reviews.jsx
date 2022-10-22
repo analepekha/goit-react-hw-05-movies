@@ -3,75 +3,58 @@ import { useState } from 'react';
 import { useParams } from "react-router-dom";
 import { getMovieReviews } from 'services/api';
 import { Loader } from 'components/Loader/Loader';
+import { DefaultText, ReviewItem, Title } from './Reviews.styled';
 
-// import { ReviewsItem } from './ReviewsItem';
 
 const Reviews = () => {
     const { id } = useParams();
     const [reviews, setReviews] = useState([]);
     const [status, setStatus] = useState('idle');
+    const [loading, setLoading] = useState(false);
 
 
-    useEffect(() => {
-        const fetchReviews = async () => {
-            if (!id) {
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      setLoading(true);
+      if (!id) {
         return;
       }
-          try {
-            setStatus('pending')
-            const { data } = await getMovieReviews(id);
-            setStatus('resolve');
-            setReviews(data.results);
           
-          // if (data.results.length === 0) {
-          //   console.log('No reviews');
-          // }
+      try {
+          setStatus('pending')
+          const { data } = await getMovieReviews(id);
+          setStatus('resolve');
+          setReviews(data.results);
       } catch (error) {
           console.log(error);
           setStatus('rejected');
-
       } finally {
+        setLoading(false);
       }
     };
     fetchReviews();
     }, [id])
-
-  console.log(reviews);
   
   return (
     <>
-      {status === 'pending' && <Loader />}
+      {status === 'pending' && loading && <Loader />}
       {reviews.length !== 0 ? (
         <ul>
           {reviews.map(({ id, author, content }) => {
             return (
-              <li key={id}>
-                <h4>Author: {author}</h4>
+              <ReviewItem key={id}>
+                <Title>Author: {author}</Title>
                 <p>{content}</p>
-              </li>
+              </ReviewItem>
             );
           })}
         </ul>
       ) : (
-        <p>We don't have any reviews for this movie.</p>
+        <DefaultText>We don't have any reviews for this movie.</DefaultText>
       )}
     </>
   );
-
-    // return (
-    //     <ul>
-    //         {reviews && <ReviewsItem reviews={reviews.results}/>}
-    //     </ul>
-    // )
-  //   return (
-  //   <>
-  //   {
-  //     reviews===[] ? (
-  //     <p>We don't have any reviews for this movie.</p>
-  //   ) : (<ReviewsItem reviews={reviews.results}/>)}
-  
-  // </> 
-  //   )
 };
   
 export default Reviews;
